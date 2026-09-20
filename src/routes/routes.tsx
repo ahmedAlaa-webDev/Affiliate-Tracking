@@ -7,7 +7,6 @@ import LoginPag from "@/pages/auth/LoginPage";
 import ProfilePage from "@/pages/user/ProfilePage";
 import UserDashboardPage from "@/pages/user/UserDashboardPage";
 import MainLayout from "@/layouts/MainLayout/MainLayout";
-import AnalyticsPage from "@/pages/admin/LinksPage";
 
 export const router = createBrowserRouter([
   {
@@ -41,10 +40,10 @@ export const router = createBrowserRouter([
             path: "users/:userId",
             element: <UserDetailsPage />,
           },
-          {
-            path: "analytics",
-            element: <AnalyticsPage />,
-          },
+          // {
+          //   path: "analytics",
+          //   element: <AnalyticsPage />,
+          // },
         ],
       },
 

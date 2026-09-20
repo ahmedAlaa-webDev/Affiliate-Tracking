@@ -3,7 +3,6 @@ import { Nav } from "react-bootstrap";
 import {
   House,
   People,
-  BarChart,
   PersonCircle,
   BoxArrowRight,
   List,
@@ -16,7 +15,7 @@ function AdminSidebar() {
 
   return (
     <aside className="bg-dark text-white w-100">
-      <div className="container-fluid">
+      <div className="container">
 
         {/* Mobile Toggle */}
         <div className="d-lg-none p-3">
@@ -75,7 +74,7 @@ function AdminSidebar() {
               <span>Users</span>
             </NavLink>
 
-            <NavLink
+            {/* <NavLink
               to="/in/admin/analytics"
               onClick={() => setIsOpen(false)}
               className={({ isActive }) =>
@@ -86,7 +85,7 @@ function AdminSidebar() {
             >
               <BarChart size={18} />
               <span>Analytics</span>
-            </NavLink>
+            </NavLink> */}
 
           </Nav>
 

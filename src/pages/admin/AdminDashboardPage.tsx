@@ -62,24 +62,7 @@ const recentUsers = [
   },
 ];
 
-const sources = [
-  {
-    source: "Facebook",
-    clicks: 5200,
-  },
-  {
-    source: "WhatsApp",
-    clicks: 3800,
-  },
-  {
-    source: "Instagram",
-    clicks: 2100,
-  },
-  {
-    source: "Other",
-    clicks: 1440,
-  },
-];
+
 
 function AdminDashboardPage() {
 
@@ -115,7 +98,7 @@ function AdminDashboardPage() {
 
       <Row className="g-4">
         {/* Recent Users */}
-        <Col xs={12} lg={8}>
+        <Col xs={12}>
           <Card className="border-0 shadow-sm">
             <Card.Body>
               <div className="d-flex justify-content-between align-items-center mb-3">
@@ -162,33 +145,7 @@ function AdminDashboardPage() {
           </Card>
         </Col>
 
-        {/* Clicks by Source */}
-        <Col xs={12} lg={4}>
-          <Card className="border-0 shadow-sm h-100">
-            <Card.Body>
-              <h5 className="fw-bold mb-1">
-                Clicks by Source
-              </h5>
-
-              <p className="text-muted mb-4">
-                Traffic sources
-              </p>
-
-              {sources.map((item) => (
-                <div
-                  key={item.source}
-                  className="d-flex justify-content-between align-items-center mb-3"
-                >
-                  <span>{item.source}</span>
-
-                  <span className="fw-semibold">
-                    {item.clicks.toLocaleString()}
-                  </span>
-                </div>
-              ))}
-            </Card.Body>
-          </Card>
-        </Col>
+        
       </Row>
     </Container>
   );

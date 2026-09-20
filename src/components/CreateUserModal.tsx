@@ -5,7 +5,7 @@ import {
   Modal,
 } from "react-bootstrap";
 
-function CreateUserModal() {
+function CreateUserModal({textBtn}:{textBtn : string}) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => {
@@ -18,14 +18,12 @@ function CreateUserModal() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    // بعدين هنا هنضيف create user logic
   };
 
   return (
     <>
       <Button onClick={handleShow}>
-        + Add User
+        {textBtn}
       </Button>
 
       <Modal
