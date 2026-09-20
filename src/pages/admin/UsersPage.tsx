@@ -1,6 +1,5 @@
 import CreateUserModal from "@/components/CreateUserModal";
-import { Badge, Card, Col, Container, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Card, Col, Container, Row } from "react-bootstrap";
 
 const users = [
   {
