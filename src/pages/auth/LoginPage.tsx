@@ -1,5 +1,5 @@
 import { Container, Row, Col, Card, Form, Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -37,6 +37,7 @@ function LoginPage() {
                   <Button variant="primary" type="submit" className="w-100">
                     Login
                   </Button>
+                  <Link to={"/in/user"}>user</Link>
                 </Form>
               </Card.Body>
             </Card>
