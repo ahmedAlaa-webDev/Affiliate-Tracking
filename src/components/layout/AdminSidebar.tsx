@@ -1,4 +1,3 @@
-
 import { Nav } from "react-bootstrap";
 import {
   House,
@@ -7,6 +6,7 @@ import {
   PersonCircle,
   BoxArrowRight,
 } from "react-bootstrap-icons";
+import { NavLink } from "react-router-dom";
 
 function AdminSidebar() {
   return (
@@ -17,6 +17,7 @@ function AdminSidebar() {
           {/* Logo */}
           <div className="p-3 p-lg-4 text-center text-lg-start">
             <h4 className="mb-0 fw-bold">Referral App</h4>
+
             <small className="text-secondary">
               Admin Panel
             </small>
@@ -24,48 +25,68 @@ function AdminSidebar() {
 
           {/* Main Navigation */}
           <Nav className="d-flex flex-column flex-md-row p-2 p-lg-3 gap-1 gap-lg-2">
-            <Nav.Link
-              href="/in/admin"
-              className="text-white d-flex align-items-center gap-2 rounded px-3 py-2"
+
+            <NavLink
+              to="/in/admin/dashboard"
+              className={({ isActive }) =>
+                `text-white text-decoration-none d-flex align-items-center gap-2 rounded px-3 py-2 ${
+                  isActive ? "bg-primary" : ""
+                }`
+              }
             >
               <House size={18} />
               <span>Dashboard</span>
-            </Nav.Link>
+            </NavLink>
 
-            <Nav.Link
-              href="/in/admin/users"
-              className="text-white d-flex align-items-center gap-2 rounded px-3 py-2"
+            <NavLink
+              to="/in/admin/users"
+              className={({ isActive }) =>
+                `text-white text-decoration-none d-flex align-items-center gap-2 rounded px-3 py-2 ${
+                  isActive ? "bg-primary" : ""
+                }`
+              }
             >
               <People size={18} />
               <span>Users</span>
-            </Nav.Link>
+            </NavLink>
 
-            <Nav.Link
-              href="/in/admin/analytics"
-              className="text-white d-flex align-items-center gap-2 rounded px-3 py-2"
+            <NavLink
+              to="/in/admin/analytics"
+              className={({ isActive }) =>
+                `text-white text-decoration-none d-flex align-items-center gap-2 rounded px-3 py-2 ${
+                  isActive ? "bg-primary" : ""
+                }`
+              }
             >
               <BarChart size={18} />
               <span>Analytics</span>
-            </Nav.Link>
+            </NavLink>
+
           </Nav>
 
           {/* User Actions */}
           <div className="d-flex flex-column flex-md-row align-items-center p-2 p-lg-3 gap-1 gap-lg-2">
-            <Nav.Link
-              href="/in/user/profile"
-              className="text-white d-flex align-items-center gap-2 rounded px-3 py-2"
+
+            <NavLink
+              to="/in/user/profile"
+              className={({ isActive }) =>
+                `text-white text-decoration-none d-flex align-items-center gap-2 rounded px-3 py-2 ${
+                  isActive ? "bg-primary" : ""
+                }`
+              }
             >
               <PersonCircle size={18} />
               <span>Profile</span>
-            </Nav.Link>
+            </NavLink>
 
-            <Nav.Link
-              href="/login"
-              className="text-danger d-flex align-items-center gap-2 rounded px-3 py-2"
+            <NavLink
+              to="/login"
+              className="text-danger text-decoration-none d-flex align-items-center gap-2 rounded px-3 py-2"
             >
               <BoxArrowRight size={18} />
               <span>Logout</span>
-            </Nav.Link>
+            </NavLink>
+
           </div>
 
         </div>
@@ -75,4 +96,3 @@ function AdminSidebar() {
 }
 
 export default AdminSidebar;
-
