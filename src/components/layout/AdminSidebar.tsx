@@ -13,9 +13,7 @@ import { NavLink, useLocation } from "react-router-dom";
 function AdminSidebar() {
   const { pathname } = useLocation();
 
-  const url = pathname.split("/").filter((e) => e);
-
-  console.log(url)
+  const rol = pathname.split("/").filter((e) => e)[1];
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -48,27 +46,19 @@ function AdminSidebar() {
           {/* Main Navigation */}
           <Nav className="d-flex flex-column flex-lg-row p-2 p-lg-3 gap-1 gap-lg-2">
             <NavLink
-              to={`/in/${url[1]}/dashboard`}
+              to={`/in/${rol}`}
               onClick={() => setIsOpen(false)}
-              className={({ isActive }) =>
-                `text-white text-decoration-none d-flex align-items-center gap-2 rounded px-3 py-2 ${
-                  isActive ? "bg-primary" : ""
-                }`
-              }
+              className="text-white text-decoration-none d-flex align-items-center gap-2 rounded px-3 py-2 "
             >
               <House size={18} />
               <span>Dashboard</span>
             </NavLink>
 
-            {url[1] === "admin" ? (
+            {rol === "admin" ? (
               <NavLink
                 to="/in/admin/users"
                 onClick={() => setIsOpen(false)}
-                className={({ isActive }) =>
-                  `text-white text-decoration-none d-flex align-items-center gap-2 rounded px-3 py-2 ${
-                    isActive ? "bg-primary" : ""
-                  }`
-                }
+                className={`text-white text-decoration-none d-flex align-items-center gap-2 rounded px-3 py-2 `}
               >
                 <People size={18} />
                 <span>Users</span>
@@ -79,9 +69,7 @@ function AdminSidebar() {
               to="/in/admin/analytics"
               onClick={() => setIsOpen(false)}
               className={({ isActive }) =>
-                `text-white text-decoration-none d-flex align-items-center gap-2 rounded px-3 py-2 ${
-                  isActive ? "bg-primary" : ""
-                }`
+                `text-white text-decoration-none d-flex align-items-center gap-2 rounded px-3 py-2 `
               }
             >
               <BarChart size={18} />
@@ -92,13 +80,9 @@ function AdminSidebar() {
           {/* User Actions */}
           <div className="d-flex flex-column flex-md-row align-items-center p-2 p-lg-3 gap-1 gap-lg-2">
             <NavLink
-              to="/in/user/profile"
+              to={`/in/${rol}/profile`}
               onClick={() => setIsOpen(false)}
-              className={({ isActive }) =>
-                `text-white text-decoration-none d-flex align-items-center gap-2 rounded px-3 py-2 ${
-                  isActive ? "bg-primary" : ""
-                }`
-              }
+              className={`text-white text-decoration-none d-flex align-items-center gap-2 rounded px-3 py-2 `}
             >
               <PersonCircle size={18} />
               <span>Profile</span>
