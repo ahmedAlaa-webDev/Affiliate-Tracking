@@ -4,9 +4,11 @@ import { Navigate, Outlet, useLocation } from "react-router-dom";
 function MainLayout() {
   const { pathname } = useLocation();
 
+
   if (pathname === "/in" || pathname === "/in/") {
-    return <Navigate to="/in/admin/dashboard" replace />;
+    return <Navigate to={`/`} replace />;
   }
+
 
   return (
     <div className="d-flex flex-column min-vh-100">

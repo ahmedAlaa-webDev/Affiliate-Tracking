@@ -1,35 +1,43 @@
 import CreateUserModal from "@/components/CreateUserModal";
+import { getUsers } from "@/services/getUsers";
+import { useEffect, useState } from "react";
 import { Card, Col, Container, Row } from "react-bootstrap";
 
-const users = [
-  {
-    id: "user-1",
-    name: "Ahmed Ali",
-    email: "ahmed@example.com",
-    totalClicks: 1240,
-  },
-  {
-    id: "user-2",
-    name: "Mohamed Hassan",
-    email: "mohamed@example.com",
+import type { TUser } from "@/types/userType";
 
-    totalClicks: 890,
-  },
-  {
-    id: "user-3",
-    name: "Omar Khaled",
-    email: "omar@example.com",
-    totalClicks: 645,
-  },
-  {
-    id: "user-4",
-    name: "Ali Mahmoud",
-    email: "ali@example.com",
-    totalClicks: 430,
-  },
-];
+
 
 function UsersPage() {
+    const [users, setUsers] = useState<TUser[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        setLoading(true);
+
+        const data = await getUsers();
+
+        setUsers(data as TUser[]);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+        setError("Failed to load users");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUsers();
+  }, []);
+
+  if (loading) {
+    return <p>Loading users...</p>;
+  }
+
+  if (error) {
+    return <p>{error}</p>;
+  }
   return (
     <Container fluid className="p-4">
       {/* Header */}
@@ -45,7 +53,7 @@ function UsersPage() {
 
       {/* Users */}
       <Row className="g-4">
-        {users.map((user) => (
+        {users.filter(user =>user.role == "user").map((user) => (
           <Col key={user.id} xs={12} md={6} xl={4}>
             <Card className="border-0 shadow-sm h-100">
               <Card.Body className="p-4">
@@ -65,7 +73,7 @@ function UsersPage() {
                       <small className="text-muted d-block">Total Clicks</small>
 
                       <h4 className="fw-bold mb-0 mt-1">
-                        {user.totalClicks.toLocaleString()}
+                        {user.totalClicks}
                       </h4>
                     </div>
                   </Col>

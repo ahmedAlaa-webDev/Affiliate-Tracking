@@ -1,8 +1,36 @@
+import { useState } from "react";
 import { Container, Row, Col, Card, Form, Button } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { loginUser } from "@/services/loginUser";
 
 function LoginPage() {
   const navigate = useNavigate();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState<null | string>(null);
+
+  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    try {
+      const { user, token, role } = await loginUser(email, password);
+
+      console.log("Logged in user:", user);
+      console.log("Token:", token);
+      console.log("Role:", role);
+
+      if (role === "admin") {
+        navigate("/in/admin");
+      } else if (role === "user") {
+        navigate("/in/user");
+      }
+    } catch (error) {
+      setError("Login failed : Incorrect  email or password  ");
+      console.log(error);
+    }
+  };
+
   return (
     <div className="min-vh-100 d-flex align-items-center bg-light">
       <Container>
@@ -15,29 +43,33 @@ function LoginPage() {
                   <p className="text-muted mb-0">Sign in to your account</p>
                 </div>
 
-                <Form
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    navigate("/in");
-                  }}
-                >
+                <Form onSubmit={handleSubmit}>
                   <Form.Group className="mb-3" controlId="email">
                     <Form.Label>Email</Form.Label>
-                    <Form.Control type="email" placeholder="Enter your email" />
+
+                    <Form.Control
+                      type="email"
+                      placeholder="Enter your email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
                   </Form.Group>
 
                   <Form.Group className="mb-4" controlId="password">
                     <Form.Label>Password</Form.Label>
+
                     <Form.Control
                       type="password"
                       placeholder="Enter your password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
                     />
                   </Form.Group>
 
                   <Button variant="primary" type="submit" className="w-100">
                     Login
                   </Button>
-                  <Link to={"/in/user"}>user</Link>
+                  <p>{error}</p>
                 </Form>
               </Card.Body>
             </Card>

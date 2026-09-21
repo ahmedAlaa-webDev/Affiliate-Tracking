@@ -1,11 +1,17 @@
+import { registerUser } from "@/services/registerUser";
 import { useState } from "react";
-import {
-  Button,
-  Form,
-  Modal,
-} from "react-bootstrap";
+import { Button, Form, Modal } from "react-bootstrap";
 
-function CreateUserModal({textBtn}:{textBtn : string}) {
+function CreateUserModal({ textBtn }: { textBtn: string }) {
+  
+  const [newUser, setNewUser] = useState({
+    name: "",
+    password: "",
+    email: "",
+    role: "user",
+    totalClicks : 0
+  });
+  const { name, password, email } = newUser;
   const [show, setShow] = useState(false);
 
   const handleClose = () => {
@@ -16,21 +22,28 @@ function CreateUserModal({textBtn}:{textBtn : string}) {
     setShow(true);
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+ 
+  try {
+    const result = await registerUser({...newUser});
+
+    console.log("User UID:", result.uid);
+
+  } catch (error) {
+    console.error("Registration error:", error);
+  }
+
+
+    handleClose();
   };
 
   return (
     <>
-      <Button onClick={handleShow}>
-        {textBtn}
-      </Button>
+      <Button onClick={handleShow}>{textBtn}</Button>
 
-      <Modal
-        show={show}
-        onHide={handleClose}
-        centered
-      >
+      <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton>
           <Modal.Title>Create User</Modal.Title>
         </Modal.Header>
@@ -42,6 +55,10 @@ function CreateUserModal({textBtn}:{textBtn : string}) {
 
               <Form.Control
                 type="text"
+                value={name}
+                onChange={(e) =>
+                  setNewUser({ ...newUser, name: e.target.value })
+                }
                 placeholder="Enter user name"
               />
             </Form.Group>
@@ -50,6 +67,10 @@ function CreateUserModal({textBtn}:{textBtn : string}) {
               <Form.Label>Email</Form.Label>
 
               <Form.Control
+                value={email}
+                onChange={(e) =>
+                  setNewUser({ ...newUser, email: e.target.value })
+                }
                 type="email"
                 placeholder="Enter user email"
               />
@@ -59,6 +80,10 @@ function CreateUserModal({textBtn}:{textBtn : string}) {
               <Form.Label>Password</Form.Label>
 
               <Form.Control
+                value={password}
+                onChange={(e) =>
+                  setNewUser({ ...newUser, password: e.target.value })
+                }
                 type="password"
                 placeholder="Enter password"
               />
@@ -66,17 +91,11 @@ function CreateUserModal({textBtn}:{textBtn : string}) {
           </Modal.Body>
 
           <Modal.Footer>
-            <Button
-              variant="secondary"
-              onClick={handleClose}
-            >
+            <Button variant="secondary" onClick={handleClose}>
               Cancel
             </Button>
 
-            <Button
-              variant="primary"
-              type="submit"
-            >
+            <Button variant="primary" type="submit">
               Create User
             </Button>
           </Modal.Footer>

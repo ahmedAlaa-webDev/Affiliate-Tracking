@@ -1,3 +1,5 @@
+import { signOut } from "firebase/auth";
+import { auth } from "@/firebase/config";
 import { useState } from "react";
 import { Nav } from "react-bootstrap";
 import {
@@ -16,6 +18,14 @@ function AdminSidebar() {
   const rol = pathname.split("/").filter((e) => e)[1];
 
   const [isOpen, setIsOpen] = useState(false);
+
+  const handleLogout = async () => {
+  try {
+    await signOut(auth);
+  } catch (error) {
+    console.error("Logout failed:", error);
+  }
+};
 
   return (
     <aside className="bg-dark text-white w-100">
@@ -91,6 +101,7 @@ function AdminSidebar() {
             <NavLink
               to="/login"
               className="text-danger text-decoration-none d-flex align-items-center gap-2 rounded px-3 py-2"
+              onClick={handleLogout}
             >
               <BoxArrowRight size={18} />
               <span>Logout</span>
