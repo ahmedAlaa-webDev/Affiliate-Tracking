@@ -7,27 +7,27 @@ import { Clipboard, CheckCircle } from "react-bootstrap-icons";
 
 function UserDashboardPage() {
   const [copied, setCopied] = useState(false);
+  const { user } = useAuth();
 
-    const { user } = useAuth();
-  
-    const [userData, setUserData] = useState<UserData | null>(null);
-  
-    useEffect(() => {
-      if (!user) return;
-  
-      const fetchUser = async () => {
-        const data = await getUserById(user.uid);
-        setUserData(data);
-      };
-  
-      fetchUser();
-    }, [user]);
-  
+  const [userData, setUserData] = useState<UserData | null>(null);
 
-  // Firebase 
+  useEffect(() => {
+    if (!user) return;
+
+    const fetchUser = async () => {
+      const data = await getUserById(user.uid);
+      setUserData(data);
+    };
+
+    fetchUser();
+  }, [user]);
+const baseUrl = window.location.origin;
+const referralLink = `${baseUrl}/referral?ref=${userData?.id}`;
+
+  // Firebase
   const referralData = {
     totalClicks: userData?.totalClicks,
-    referralLink: "https://yourapp.com/go/ahmed123",
+    referralLink: referralLink ,
   };
 
   const handleCopyLink = async () => {
@@ -52,9 +52,7 @@ function UserDashboardPage() {
           <div className="text-center mb-4">
             <h2 className="fw-bold mb-2">Welcome Back</h2>
 
-            <p className="text-muted mb-0">
-              Track your referral performance.
-            </p>
+            <p className="text-muted mb-0">Track your referral performance.</p>
           </div>
 
           {/* Total Clicks Card */}
@@ -62,18 +60,14 @@ function UserDashboardPage() {
             <Card.Body className="text-center p-4">
               <p className="text-muted mb-2">Total Clicks</p>
 
-              <h1 className="fw-bold mb-0">
-                {referralData.totalClicks}
-              </h1>
+              <h1 className="fw-bold mb-0">{referralData.totalClicks}</h1>
             </Card.Body>
           </Card>
 
           {/* Referral Link Card */}
           <Card className="border-0 shadow-sm">
             <Card.Body className="p-4">
-              <h5 className="fw-bold text-center mb-3">
-                Your Referral Link
-              </h5>
+              <h5 className="fw-bold text-center mb-3">Your Referral Link</h5>
 
               <div className="bg-light border rounded p-3 mb-3">
                 <p

@@ -4,4 +4,5 @@ export type UserData = {
   email: string;
   role: "admin" | "user";
   totalClicks: number;
+  referral :string
 };

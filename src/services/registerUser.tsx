@@ -14,7 +14,8 @@ type RegisterData = {
   email: string;
   password: string;
   role: string;
-  totalClicks:number
+  totalClicks:number;
+  referral : string;
 };
 
 export const registerUser = async ({
@@ -22,7 +23,8 @@ export const registerUser = async ({
   email,
   password,
   role,
-  totalClicks
+  totalClicks,
+  referral
 }: RegisterData) => {
 
   const userCredential = await createUserWithEmailAndPassword(
@@ -39,7 +41,8 @@ export const registerUser = async ({
     name,
     email,
     role,
-    totalClicks
+    totalClicks,
+    referral
   });
 
   return {

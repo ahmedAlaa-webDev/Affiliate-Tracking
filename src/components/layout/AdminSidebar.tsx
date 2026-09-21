@@ -4,7 +4,6 @@ import { useState } from "react";
 import { Nav } from "react-bootstrap";
 import {
   House,
-  People,
   PersonCircle,
   BoxArrowRight,
   List,
@@ -64,27 +63,7 @@ function AdminSidebar() {
               <span>Dashboard</span>
             </NavLink>
 
-            {rol === "admin" ? (
-              <NavLink
-                to="/in/admin/users"
-                onClick={() => setIsOpen(false)}
-                className={`text-white text-decoration-none d-flex align-items-center gap-2 rounded px-3 py-2 `}
-              >
-                <People size={18} />
-                <span>Users</span>
-              </NavLink>
-            ) : null}
 
-            {/* <NavLink
-              to="/in/admin/analytics"
-              onClick={() => setIsOpen(false)}
-              className={({ isActive }) =>
-                `text-white text-decoration-none d-flex align-items-center gap-2 rounded px-3 py-2 `
-              }
-            >
-              <BarChart size={18} />
-              <span>Analytics</span>
-            </NavLink> */}
           </Nav>
 
           {/* User Actions */}

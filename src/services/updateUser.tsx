@@ -7,8 +7,7 @@ import {
 export const updateUser = async (
   uid: string,
   data: {
-    name?: string;
-    totalClicks?: number;
+    referral: string;
   }
 ) => {
   await updateDoc(

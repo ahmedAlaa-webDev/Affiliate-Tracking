@@ -9,9 +9,10 @@ function CreateUserModal({ textBtn }: { textBtn: string }) {
     password: "",
     email: "",
     role: "user",
-    totalClicks : 0
+    totalClicks : 0,
+    referral : "https://landing-ideas.web.app/",
   });
-  const { name, password, email } = newUser;
+  const { name, password, email ,referral} = newUser;
   const [show, setShow] = useState(false);
 
   const handleClose = () => {
@@ -73,6 +74,18 @@ function CreateUserModal({ textBtn }: { textBtn: string }) {
                 }
                 type="email"
                 placeholder="Enter user email"
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Referral URL:</Form.Label>
+
+              <Form.Control
+                value={referral}
+                onChange={(e) =>
+                  setNewUser({ ...newUser, referral: e.target.value })
+                }
+                type="text"
+                placeholder="Enter Referral URL"
               />
             </Form.Group>
 

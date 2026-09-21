@@ -13,6 +13,8 @@ function AdminDashboardPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  
+
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -105,7 +107,7 @@ const userclicks = users.reduce((accumulator, currentValue,) => {
                     .map((user) => (
                       <tr
                         onClick={() => {
-                          navigate("/in/admin/users/Id");
+                          navigate(`/in/admin/users?id=${user.id}`);
                         }}
                         key={user.id}
                       >
