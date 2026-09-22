@@ -1,5 +1,4 @@
 import { useAuth } from "@/context/AuthContext";
-import { auth } from "@/firebase/config";
 import { useState } from "react";
 import { Nav } from "react-bootstrap";
 import {
