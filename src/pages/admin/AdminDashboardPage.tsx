@@ -1,19 +1,17 @@
 import { getUsers } from "@/services/getUsers";
 import { useEffect, useState } from "react";
-import { Card, Col, Container, Row, Table } from "react-bootstrap";
+import { Button, Card, Col, Container, Row, Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 import { type TUser } from "@/types/userType";
 import CreateUserModal from "@/components/CreateUserModal";
-
+import { deleteUserData } from "@/services/deleteUser";
 
 function AdminDashboardPage() {
   const navigate = useNavigate();
   const [users, setUsers] = useState<TUser[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
-  
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -34,7 +32,6 @@ function AdminDashboardPage() {
     fetchUsers();
   }, []);
 
-
   if (loading) {
     return <p>Loading users...</p>;
   }
@@ -43,10 +40,19 @@ function AdminDashboardPage() {
     return <p>{error}</p>;
   }
 
-const userNum = users.length
-const userclicks = users.reduce((accumulator, currentValue,) => {
-  return accumulator + currentValue.totalClicks;
-}, 0);
+  const userNum = users.length;
+  const userclicks = users.reduce((accumulator, currentValue) => {
+    return accumulator + currentValue.totalClicks;
+  }, 0);
+
+  const handleDelete = async (uid: string) => {
+    try {
+      await deleteUserData(uid);
+      window.location.reload();
+    } catch (error) {
+      console.error("Delete user failed:", error);
+    }
+  };
   return (
     <Container fluid className="p-4">
       {/* Header */}
@@ -56,30 +62,29 @@ const userclicks = users.reduce((accumulator, currentValue,) => {
 
       {/* Statistics */}
       <Row className="g-4 mb-4">
+        <Col md={{ span: 3, offset: 3 }}>
+          <Card className="border-0 shadow-sm h-100">
+            <Card.Body>
+              <p className="text-muted mb-2">All Users</p>
 
-            <Col md={{span : 3,offset : 3}}>
-              <Card className="border-0 shadow-sm h-100">
-                <Card.Body>
-                  <p className="text-muted mb-2">All Users</p>
+              <h3 className="fw-bold mb-2">{userNum}</h3>
 
-                  <h3 className="fw-bold mb-2">{userNum}</h3>
+              <small className="text-muted">Active referral users</small>
+            </Card.Body>
+          </Card>
+        </Col>
+        <Col md={{ span: 3 }}>
+          <Card className="border-0 shadow-sm h-100">
+            <Card.Body>
+              <p className="text-muted mb-2">All time clicks</p>
 
-                  <small className="text-muted">Active referral users</small>
-                </Card.Body>
-              </Card>
-            </Col>
-            <Col md={{span : 3}} >
-              <Card className="border-0 shadow-sm h-100">
-                <Card.Body>
-                  <p className="text-muted mb-2">All time clicks</p>
+              <h3 className="fw-bold mb-2">{userclicks}</h3>
 
-                  <h3 className="fw-bold mb-2">{userclicks}</h3>
-
-                  <small className="text-muted">Active referral users</small>
-                </Card.Body>
-              </Card>
-            </Col>
-        </Row>
+              <small className="text-muted">Active referral users</small>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
 
       <Row className="g-4">
         {/* Recent Users */}
@@ -97,31 +102,46 @@ const userclicks = users.reduce((accumulator, currentValue,) => {
                 <thead>
                   <tr>
                     <th>User</th>
-                    <th></th>
                     <th>Clicks</th>
+                    <th> Edit</th>
+                    <th> Delete</th>
                   </tr>
                 </thead>
 
                 <tbody>
-                  {users
-                    .map((user) => (
-                      <tr
-                        onClick={() => {
-                          navigate(`/in/admin/users?id=${user.id}`);
-                        }}
-                        key={user.id}
-                      >
-                        <td>
-                          <div className="fw-semibold">{user.name}</div>
+                  {users.map((user) => (
+                    <tr key={user.id}>
+                      <td>
+                        <div className="fw-semibold">{user.name}</div>
 
-                          <small className="text-muted">{user.email}</small>
-                        </td>
+                        <small className="text-muted">{user.email}</small>
+                      </td>
 
-                        <td></td>
-
-                        <td className="fw-semibold">{user.totalClicks}</td>
-                      </tr>
-                    ))}
+                      <td className="fw-semibold">{user.totalClicks}</td>
+                      <td>
+                        {" "}
+                        <Button
+                          onClick={() => {
+                        navigate(`/in/admin/users?id=${user.id}`);
+                      }}
+                          variant="light"
+                        >
+                          Edit
+                        </Button>
+                      </td>
+                      <td>
+                        {" "}
+                        <Button
+                          onClick={() => {
+                            handleDelete(user.id);
+                          }}
+                          variant="danger"
+                        >
+                          Delete
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </Table>
             </Card.Body>

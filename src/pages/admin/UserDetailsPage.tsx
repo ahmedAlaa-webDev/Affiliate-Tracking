@@ -20,7 +20,7 @@ function UserDetailsPage() {
     fetchUser();
   }, [id]);
 
-  const handelSubmit = async (e: React.SubmitEvent) => {
+  const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
     if (!id || !referral) {
       return "id undefind";
@@ -42,7 +42,7 @@ function UserDetailsPage() {
 
             <Form
               onSubmit={(e) => {
-                handelSubmit(e);
+                handleSubmit(e);
               }}
             >
               <Form.Group className="mb-4">

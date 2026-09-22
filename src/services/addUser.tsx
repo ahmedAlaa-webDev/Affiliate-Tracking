@@ -1,7 +1,7 @@
 import { db } from "@/firebase/config";
 import { addDoc, collection } from "firebase/firestore";
 
-export const addUser = async ({name, email, password,totalClicks , role}:{name: string, email: string , password:string,totalClicks:number,role:string}) => {
+export const addUser = async ({name, email, password,totalClicks , role,referral}:{name: string, email: string , password:string,totalClicks:number,role:string ,referral:string}) => {
 
   const usersCollection = collection(db, "user");
 
@@ -12,6 +12,7 @@ export const addUser = async ({name, email, password,totalClicks , role}:{name: 
     password,
     role,
     totalClicks,
+    referral,
   });
 
 
