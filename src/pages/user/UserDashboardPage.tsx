@@ -15,7 +15,7 @@ function UserDashboardPage() {
     if (!user) return;
 
     const fetchUser = async () => {
-      const data = await getUserById(user.uid);
+      const data = await getUserById(user.id);
       setUserData(data);
     };
 
@@ -26,7 +26,7 @@ const referralLink = `${baseUrl}/referral?ref=${userData?.id}`;
 
   // Firebase
   const referralData = {
-    totalClicks: userData?.totalClicks,
+    totalClicks: userData?.totalClicks || 0,
     referralLink: referralLink ,
   };
 

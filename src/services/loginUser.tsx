@@ -1,32 +1,33 @@
-import { auth, db } from "@/firebase/config";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 
-export const loginUser = async (email: string, password: string) => {
-  const userCredential = await signInWithEmailAndPassword(
-    auth,
-    email,
-    password
+import { db } from "@/firebase/config";
+import type { UserData } from "@/types/UserData";
+
+export const loginUser = async (
+  email: string,
+  password: string
+) :Promise<UserData> => {
+  const usersQuery = query(
+    collection(db, "user"),
+    where("email", "==", email),
+    where("password", "==", password)
   );
 
-  const user = userCredential.user;
+  const snapshot = await getDocs(usersQuery);
 
-  const token = await user.getIdToken();
-
-  const userDoc = await getDoc(doc(db, "user", user.uid));
-
-  if (!userDoc.exists()) {
-    throw new Error("User data not found");
+  if (snapshot.empty) {
+    throw new Error("Invalid email or password");
   }
 
-  const userData = userDoc.data();
+  const userDocument = snapshot.docs[0];
 
   return {
-    user,
-    token,
-    role: userData.role,
-  };
+    id: userDocument.id,
+    ...userDocument.data(),
+  }as UserData;
 };
-
-
-

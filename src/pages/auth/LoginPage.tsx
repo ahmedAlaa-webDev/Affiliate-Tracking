@@ -2,32 +2,32 @@ import { useState } from "react";
 import { Container, Row, Col, Card, Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "@/services/loginUser";
+import { useAuth } from "@/context/AuthContext";
 
 function LoginPage() {
+  const { setUser } = useAuth();
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<null | string>(null);
-
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
-      const { user, token, role } = await loginUser(email, password);
+      const userData = await loginUser(email, password);
 
-      console.log("Logged in user:", user);
-      console.log("Token:", token);
-      console.log("Role:", role);
+      setUser(userData);
 
-      if (role === "admin") {
+      if (userData.role === "admin") {
         navigate("/in/admin");
-      } else if (role === "user") {
+      } else if (userData.role === "user") {
         navigate("/in/user");
       }
     } catch (error) {
-      setError("Login failed : Incorrect  email or password  ");
-      console.log(error);
+      setError("Login failed: Incorrect email or password");
+
+      console.error(error);
     }
   };
 

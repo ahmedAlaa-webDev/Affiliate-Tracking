@@ -1,4 +1,5 @@
 import { Navigate, Outlet } from "react-router-dom";
+
 import { useAuth } from "@/context/AuthContext";
 
 type ProtectedRouteProps = {
@@ -19,7 +20,7 @@ const ProtectedRoute = ({
   }
 
   if (role !== allowedRole) {
-    return <Navigate to="/in" replace />;
+    return <Navigate to="/login" replace />;
   }
 
   return <Outlet />;

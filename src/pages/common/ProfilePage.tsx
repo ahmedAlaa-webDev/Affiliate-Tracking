@@ -1,8 +1,8 @@
-import { useAuth } from "@/context/AuthContext";
 import {  Card, Col, Container, Form, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { getUserById } from "@/services/getUserById";
 import type { UserData } from "@/types/UserData";
+import { useAuth } from "@/context/AuthContext";
 
 
 function ProfilePage() {
@@ -14,7 +14,7 @@ function ProfilePage() {
     if (!user) return;
 
     const fetchUser = async () => {
-      const data = await getUserById(user.uid);
+      const data = await getUserById(user.id);
       setUserData(data);
     };
 

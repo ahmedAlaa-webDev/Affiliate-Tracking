@@ -1,4 +1,4 @@
-import { signOut } from "firebase/auth";
+import { useAuth } from "@/context/AuthContext";
 import { auth } from "@/firebase/config";
 import { useState } from "react";
 import { Nav } from "react-bootstrap";
@@ -9,7 +9,7 @@ import {
   List,
   X,
 } from "react-bootstrap-icons";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 
 function AdminSidebar() {
   const { pathname } = useLocation();
@@ -18,13 +18,13 @@ function AdminSidebar() {
 
   const [isOpen, setIsOpen] = useState(false);
 
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+
   const handleLogout = async () => {
-  try {
-    await signOut(auth);
-  } catch (error) {
-    console.error("Logout failed:", error);
-  }
-};
+    logout();
+    navigate("/login", { replace: true });
+  };
 
   return (
     <aside className="bg-dark text-white w-100">
@@ -62,8 +62,6 @@ function AdminSidebar() {
               <House size={18} />
               <span>Dashboard</span>
             </NavLink>
-
-
           </Nav>
 
           {/* User Actions */}

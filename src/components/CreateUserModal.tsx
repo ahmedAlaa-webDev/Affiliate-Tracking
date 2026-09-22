@@ -1,4 +1,4 @@
-import { registerUser } from "@/services/registerUser";
+import { addUser } from "@/services/addUser";
 import { useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 
@@ -13,6 +13,7 @@ function CreateUserModal({ textBtn }: { textBtn: string }) {
     referral : "https://landing-ideas.web.app/",
   });
   const { name, password, email ,referral} = newUser;
+  const [err, setErr] = useState("");
   const [show, setShow] = useState(false);
 
   const handleClose = () => {
@@ -25,19 +26,21 @@ function CreateUserModal({ textBtn }: { textBtn: string }) {
 
   const handleSubmit = async (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
-
  
   try {
-    const result = await registerUser({...newUser});
+    const user = await addUser({...newUser});
 
-    console.log("User UID:", result.uid);
+    console.log("User UID:", user.id);
+        handleClose();
+      window.location.reload();
+
 
   } catch (error) {
-    console.error("Registration error:", error);
+    setErr("Registration error" + error);
+
   }
 
 
-    handleClose();
   };
 
   return (
@@ -100,6 +103,7 @@ function CreateUserModal({ textBtn }: { textBtn: string }) {
                 type="password"
                 placeholder="Enter password"
               />
+              {err}
             </Form.Group>
           </Modal.Body>
 
