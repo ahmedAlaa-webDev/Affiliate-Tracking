@@ -1,17 +1,15 @@
 import { db } from "@/firebase/config";
-import {
-  doc,
-  updateDoc,
-} from "firebase/firestore";
+import { doc, updateDoc } from "firebase/firestore";
 
 export const updateUser = async (
-  uid: string,
+  uid: string | undefined,
   data: {
-    referral: string;
-  }
+    referral?: string;
+    email?: string;
+    password?: string;
+    name?: string;
+  },
 ) => {
-  await updateDoc(
-    doc(db, "user", uid),
-    data
-  );
+  if( uid == undefined)return "user id undefined"
+  await updateDoc(doc(db, "user", uid), data);
 };

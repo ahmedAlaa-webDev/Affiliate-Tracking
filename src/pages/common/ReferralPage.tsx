@@ -3,6 +3,9 @@ import { useSearchParams } from "react-router-dom";
 
 import { trackReferralClick } from "@/services/referralService";
 
+import {Lottie} from "lottie-react";
+import loadingAnimation from "@/assets/animations/loading1.json";
+
 const ReferralPage = () => {
   const [searchParams] = useSearchParams();
 
@@ -15,8 +18,7 @@ const ReferralPage = () => {
 
     const handleReferral = async () => {
       try {
-        const destinationUrl =
-          await trackReferralClick(referralId);
+        const destinationUrl = await trackReferralClick(referralId);
 
         window.location.replace(destinationUrl);
       } catch (error) {
@@ -37,7 +39,16 @@ const ReferralPage = () => {
     return <div>{error}</div>;
   }
 
-  return <div>Processing referral...</div>;
+  return (
+<div className="min-vh-100 d-flex justify-content-center align-items-center">
+  <Lottie
+    src={loadingAnimation}
+    autoplay
+    loop
+    style={{ width: 220, height: 220 }}
+  />
+</div>
+  );
 };
 
 export default ReferralPage;
